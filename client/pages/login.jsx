@@ -23,7 +23,7 @@ const login = () => {
     login(formData.email, formData.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         setLoading(false);
         router.push("/all-tasks");
       })
@@ -34,7 +34,7 @@ const login = () => {
     e.preventDefault();
     signInWithGoogle().then((result) => {
       const user = result.user;
-      console.log(user);
+      // console.log(user);
       router.push("/add-task");
     });
   };
@@ -68,6 +68,7 @@ const login = () => {
             placeholder="john@gmail.com"
             name="email"
             onChange={handleInputChange}
+            required
           />
         </div>
         <div class="mb-6">
@@ -80,6 +81,7 @@ const login = () => {
             name="password"
             placeholder="Enter your password"
             onChange={handleInputChange}
+            required
           />
         </div>
 

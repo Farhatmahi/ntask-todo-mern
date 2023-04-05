@@ -23,24 +23,24 @@ const register = () => {
     e.preventDefault();
     signInWithGoogle().then((result) => {
       const user = result.user;
-      console.log(user);
+      // console.log(user);
       router.push("/all-tasks");
     });
   };
 
   const handleSubmit = (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     createUser(formData.email, formData.password).then((result) => {
       const user = result.user;
-      console.log(user);
+      // console.log(user);
       const userInfo = {
         displayName: formData.username,
       };
       updateUser(userInfo)
         .then((result) => {
-          console.log(result);
-          setLoading(false)
+          // console.log(result);
+          setLoading(false);
           router.push("/add-task");
         })
         .then((err) => console.log(err));
@@ -75,6 +75,7 @@ const register = () => {
             name="username"
             type="text"
             placeholder="John Doe"
+            required
             onChange={handleInputChange}
           />
         </div>
@@ -85,6 +86,7 @@ const register = () => {
           <input
             class="appearance-none bg-transparent border-b border-gray-500 w-full py-2 px-3 text-white leading-tight focus:outline-none"
             name="email"
+            required
             type="text"
             placeholder="john@gmail.com"
             onChange={handleInputChange}
@@ -97,6 +99,7 @@ const register = () => {
           <input
             class="appearance-none bg-transparent border-b border-gray-500 w-full py-2 px-3 text-white leading-tight focus:outline-none"
             name="password"
+            required
             type="password"
             placeholder="Enter your password"
             onChange={handleInputChange}

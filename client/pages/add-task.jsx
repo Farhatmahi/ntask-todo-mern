@@ -7,7 +7,7 @@ import { Oval } from "react-loader-spinner";
 
 const addTask = () => {
   const { user } = useContext(AuthContext);
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState({
     task_name: "",
     description: "",
@@ -30,7 +30,7 @@ const addTask = () => {
     e.preventDefault();
 
     if ((!email, !task_name || !description || !due_date)) {
-      setLoading(false); 
+      setLoading(false);
       return console.error("An error occurred");
     }
     try {
@@ -44,8 +44,8 @@ const addTask = () => {
       const data = await response.json();
       console.log(data);
       setLoading(false);
-      toast.success('Task!')
-      router.push('/all-tasks')
+      toast.success("Task!");
+      router.push("/all-tasks");
       return data;
     } catch (error) {
       console.log(error);
@@ -70,7 +70,7 @@ const addTask = () => {
         </div>
         {/* form  */}
       </div>
-      <form class="shadow-md rounded px-8 pt-10 pb-8 mb-4">
+      <form class="shadow-md rounded px-8 pt-10 pb-8 mb-4 min-h-[70vh] lg:min-h-0">
         <div class="mb-4">
           <label class="block text-white " htmlFor="username">
             Task name

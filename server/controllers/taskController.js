@@ -45,6 +45,30 @@ const deleteTask = async (req, res) => {
   }
 };
 
-const editTask = async(req, res) => {}
+const editTask = async (req, res) => {
+  try {
+    const { data, id } = req.body;
+    const updatedTask = await Task.findByIdAndUpdate(
+      id,
+      {
+        task_name: data.task_name,
+        description: data.description,
+        due_date: data.due_date,
+      },
+      { new: true }
+    );
 
-module.exports = { addTask, allTasks, deleteTask };
+    if (!updatedTask) {
+      return res.status(404).send({ message: "Not found" });
+    } else {
+      const updatedTaskArray = await Task.find()
+      return res.status(200).json(updatedTaskArray);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Server Error" });
+  }
+};
+
+
+module.exports = { addTask, allTasks, deleteTask, editTask };

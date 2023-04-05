@@ -1,16 +1,47 @@
 import { AuthContext } from "@/context/authContext";
-import { useContext } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
 
-const Modal = () => {
+const Modal = ({ datae, setTasks, setIsOpen }) => {
   const { loading } = useContext(AuthContext);
+  const { _id } = datae;
+  const [formData, setFormData] = useState({
+    task_name: "",
+    description: "",
+    due_date: "",
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  const handleEditTask = async (id) => {};
+  const handleEditTask = async (id) => {
+    try {
+      const { data } = await axios.put(
+        `http://localhost:4000/tasks/update`,
+        {
+          data: formData,
+          id: id,
+        },
+        {
+          headers: { "content-type": "application/json" },
+        }
+      );
+      // console.log("clicked");
+      // console.log(data);
+      toast.success("Task updated successfully");
+      setTasks(data);
+      setIsOpen(false);
+    } catch (error) {}
+  };
 
   return (
     <>
       <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-      <div className="modal">
+      <div className="modal bg-[#00000070]">
         <div className="modal-box relative bg-secondary">
           <label
             htmlFor="my-modal-3"
@@ -29,6 +60,7 @@ const Modal = () => {
                 type="text"
                 placeholder="Make a sandwich"
                 name="task_name"
+                onChange={handleInputChange}
               />
             </div>
             <div class="mb-6">
@@ -39,7 +71,8 @@ const Modal = () => {
                 class="appearance-none bg-transparent border-b border-gray-500 w-full py-2 px-3 text-white leading-tight focus:outline-none"
                 type="text"
                 name="description"
-                placeholder="Enter your password"
+                placeholder="A quick brown fox jumped over the lazy dog"
+                onChange={handleInputChange}
               />
             </div>
             <div class="mb-6">
@@ -50,13 +83,14 @@ const Modal = () => {
                 class="appearance-none bg-transparent border-b border-gray-500 w-full py-2 px-3 text-white leading-tight focus:outline-none"
                 type="date"
                 name="due_date"
-                placeholder="Enter your password"
+                placeholder="18-04-2023"
+                onChange={handleInputChange}
               />
             </div>
 
             <div class="flex items-center justify-start gap-6">
               <button
-                onClick={handleEditTask}
+                onClick={() => handleEditTask(_id)}
                 className="btn bg-accent text-white w-36"
                 type="button"
               >
