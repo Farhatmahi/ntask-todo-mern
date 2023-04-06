@@ -34,7 +34,7 @@ const addTask = () => {
       return console.error("An error occurred");
     }
     try {
-      const response = await fetch(`http://localhost:4000/tasks`, {
+      const response = await fetch(`https://todo-server-chi.vercel.app/tasks`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

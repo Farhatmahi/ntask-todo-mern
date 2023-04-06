@@ -6,13 +6,14 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import { useState } from "react";
 import TaskModal from "./TaskModal";
 
-const TaskCard = ({ datae, setTasks }) => {
+const TaskCard = ({ datae, setTasks, control, setModalData }) => {
   const { _id, email, task_name, description, due_date, priority } = datae;
+
   const [isOpen, setIsOpen] = useState(true);
 
   const handleDelete = async (id) => {
     const res = await fetch(
-      `http://localhost:4000/tasks/${id}?email=${email}`,
+      `https://todo-server-chi.vercel.app/tasks/${id}?email=${email}`,
       {
         method: "DELETE",
       }
@@ -24,7 +25,13 @@ const TaskCard = ({ datae, setTasks }) => {
 
   return (
     <>
-      <label htmlFor="my-modal-5">
+      <label
+        htmlFor="my-modal-5"
+        onClick={() => {
+          control();
+          setModalData(datae);
+        }}
+      >
         <div className="bg-primary rounded-2xl p-6 text-white min-h-[200px] flex flex-col gap-4 justify-between">
           <div className="pb-4 border-b ">
             <h1 className="text-3xl mb-2">{task_name}</h1>
@@ -74,12 +81,7 @@ const TaskCard = ({ datae, setTasks }) => {
           {/* <DeleteConfirmation datae={datae} /> */}
         </div>
       </label>
-      <TaskModal
-        task_name={task_name}
-        description={description}
-        due_date={due_date}
-        priority={priority}
-      />
+      <TaskModal datae={datae} />
     </>
   );
 };

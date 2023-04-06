@@ -21,7 +21,7 @@ const Modal = ({ datae, setTasks, setIsOpen }) => {
   const handleEditTask = async (id) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:4000/tasks/update`,
+        `https://todo-server-chi.vercel.app/tasks/update`,
         {
           data: formData,
           id: id,

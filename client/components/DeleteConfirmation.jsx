@@ -1,7 +1,7 @@
 const DeleteConfirmation = ({ datae }) => {
   const handleDelete = async (id) => {
-    const res = await fetch(`http://localhost:4000/tasks/${id}`, {
-        method : "DELETE"
+    const res = await fetch(`https://todo-server-chi.vercel.app/tasks/${id}`, {
+      method: "DELETE",
     });
     const data = await res.json();
     return data;

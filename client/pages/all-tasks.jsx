@@ -1,4 +1,5 @@
 import TaskCard from "@/components/TaskCard";
+import TaskModal from "@/components/TaskModal";
 import { AuthContext } from "@/context/authContext";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -7,10 +8,20 @@ import { MdOutlineTask } from "react-icons/md";
 const allTasks = () => {
   const { user } = useContext(AuthContext);
   const [tasks, setTasks] = useState([]);
+  const [modalData, setModalData] = useState(null);
+
+  // modal elements start
+  const [opened, setOpened] = useState(false);
+  console.log(opened);
+
+  const controlModal = () => {
+    setOpened((prevState) => !prevState);
+  };
+  // modal elements end
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/tasks?email=${user?.email}`)
+      .get(`https://todo-server-chi.vercel.app/tasks?email=${user?.email}`)
       .then((response) => {
         // console.log(response.data);
         setTasks(response.data);
@@ -54,8 +65,22 @@ const allTasks = () => {
       {user ? (
         <div className="px-4 pt-8 grid grid-cols-1 lg:grid-cols-2 gap-4 min-h-[70vh] lg:min-h-0">
           {tasks.map((datae) => (
-            <TaskCard key={datae.id} datae={datae} setTasks={setTasks} />
+            <TaskCard
+              setModalData={setModalData}
+              key={datae.id}
+              datae={datae}
+              // setModalData={setModalData}
+              setTasks={setTasks}
+              control={controlModal}
+            />
           ))}
+          {opened && (
+            <TaskModal
+              modalData={modalData}
+              open={opened}
+              control={controlModal}
+            />
+          )}
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center h-[30rem]">
@@ -68,3 +93,15 @@ const allTasks = () => {
 };
 
 export default allTasks;
+
+// const Open = () => {
+
+//   return (
+//     <div>
+//       <button onClick={controlModal}>Open</button>
+// <Modal open={opened} control={controlModal} id={id} />
+//     </div>
+//   );
+// };
+
+// export default Open;
