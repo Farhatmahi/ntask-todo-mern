@@ -10,6 +10,7 @@ const register = () => {
     useContext(AuthContext);
   const router = useRouter();
 
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -24,28 +25,35 @@ const register = () => {
     e.preventDefault();
     signInWithGoogle().then((result) => {
       const user = result.user;
-      // console.log(user);
       router.push("/all-tasks");
     });
   };
 
   const handleSubmit = (e) => {
     setLoading(true);
+    setError("");
     e.preventDefault();
-    createUser(formData.email, formData.password).then((result) => {
-      const user = result.user;
-      // console.log(user);
-      const userInfo = {
-        displayName: formData.username,
-      };
-      updateUser(userInfo)
-        .then((result) => {
-          // console.log(result);
-          setLoading(false);
-          router.push("/add-task");
-        })
-        .then((err) => console.log(err));
-    });
+    createUser(formData.email, formData.password)
+      .then((result) => {
+        const user = result.user;
+        // console.log(user);
+        const userInfo = {
+          displayName: formData.username,
+        };
+        updateUser(userInfo)
+          .then((result) => {
+            setLoading(false);
+            router.push("/add-task");
+          })
+          .then((err) => {
+            // console.log(err);
+          });
+      })
+      .catch((err) => {
+        setError("Email already exists");
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   return (
@@ -92,6 +100,7 @@ const register = () => {
             placeholder="john@gmail.com"
             onChange={handleInputChange}
           />
+          <p className="text-red-500">{error}</p>
         </div>
         <div class="mb-6">
           <label class="block text-white" for="username">

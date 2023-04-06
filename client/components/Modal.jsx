@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
 
 const Modal = ({ datae, setTasks, setIsOpen }) => {
-  const { loading } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const { _id } = datae;
   const [formData, setFormData] = useState({
     task_name: "",
@@ -18,14 +18,26 @@ const Modal = ({ datae, setTasks, setIsOpen }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const updatedData = {
+    email: user?.email,
+    task_name: formData.task_name,
+    description: formData.description,
+    due_date: formData.due_date,
+  };
+
   const handleEditTask = async (id) => {
     try {
+      if (
+        formData.task_name === "" ||
+        formData.description === "" ||
+        formData.due_date === ""
+      ) {
+        toast.error("Please enter all required fields");
+        return;
+      }
       const { data } = await axios.put(
-        `https://todo-server-chi.vercel.app/tasks/update`,
-        {
-          data: formData,
-          id: id,
-        },
+        `https://todo-server-farhatmahi.vercel.app/tasks/update`,
+        { data: updatedData, id: id },
         {
           headers: { "content-type": "application/json" },
         }
@@ -61,6 +73,7 @@ const Modal = ({ datae, setTasks, setIsOpen }) => {
                 placeholder="Make a sandwich"
                 name="task_name"
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div class="mb-6">
@@ -73,6 +86,7 @@ const Modal = ({ datae, setTasks, setIsOpen }) => {
                 name="description"
                 placeholder="A quick brown fox jumped over the lazy dog"
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div class="mb-6">
@@ -85,6 +99,7 @@ const Modal = ({ datae, setTasks, setIsOpen }) => {
                 name="due_date"
                 placeholder="18-04-2023"
                 onChange={handleInputChange}
+                required
               />
             </div>
 

@@ -34,17 +34,20 @@ const addTask = () => {
       return console.error("An error occurred");
     }
     try {
-      const response = await fetch(`https://todo-server-chi.vercel.app/tasks`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(taskData),
-      });
+      const response = await fetch(
+        `https://todo-server-farhatmahi.vercel.app/tasks`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(taskData),
+        }
+      );
       const data = await response.json();
       console.log(data);
       setLoading(false);
-      toast.success("Task!");
+      toast.success("Task added!");
       router.push("/all-tasks");
       return data;
     } catch (error) {
@@ -54,7 +57,7 @@ const addTask = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center text-white border-b border-[#52525b] px-6">
+      <div className="flex w-full items-center text-white border-b border-[#52525b] px-6">
         <div className="">
           <div className="text-sm breadcrumbs py-6">
             <ul>
@@ -66,11 +69,11 @@ const addTask = () => {
               </li>
             </ul>
           </div>
-          <h1 className="text-7xl pb-4">Add Tasks</h1>
+          <h1 className="text-3xl md:text-7xl pb-4 text-center lg:text-left">Add Task</h1>
         </div>
         {/* form  */}
       </div>
-      <form class="shadow-md rounded px-8 pt-10 pb-8 mb-4 min-h-[70vh] lg:min-h-0">
+      <form class="rounded px-8 pt-10 pb-8 mb-4 min-h-[70vh] lg:min-h-0">
         <div class="mb-4">
           <label class="block text-white " htmlFor="username">
             Task name

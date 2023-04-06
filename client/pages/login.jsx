@@ -9,13 +9,14 @@ const login = () => {
   const { user, loading, setLoading } = useContext(AuthContext);
   const router = useRouter();
   const { login, signInWithGoogle } = useContext(AuthContext);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({ email: "", password: "" });
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // console.log(formData);
+  
 
   const handleLogIn = (e) => {
     setLoading(true);
@@ -23,11 +24,15 @@ const login = () => {
     login(formData.email, formData.password)
       .then((result) => {
         const user = result.user;
-        // console.log(user);
+        
         setLoading(false);
         router.push("/all-tasks");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setError("Incorrect password");
+        console.error(err);
+        setLoading(false);
+      });
   };
 
   const handleGoogleLogin = (e) => {
@@ -83,6 +88,7 @@ const login = () => {
             onChange={handleInputChange}
             required
           />
+          <p className="text-red-500">{error}</p>
         </div>
 
         <div class="flex items-center justify-start gap-6">

@@ -70,10 +70,12 @@ import Modal from "./Modal";
 
 // export default TaskModal;
 
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "@/context/authContext";
 
 export default function TaskModal({ open, control, modalData }) {
-  const { task_name, description, due_date, priority } = modalData || {};
+  const { _id, task_name, description, due_date, priority } = modalData || {};
+  const { user } = useContext(AuthContext);
 
   return (
     open && (
@@ -124,12 +126,6 @@ export default function TaskModal({ open, control, modalData }) {
                   >
                     <TiEdit />
                   </label>
-                  <button
-                    onClick={() => handleDelete(_id)}
-                    className="btn bg-transparent hover:bg-transparent border-0"
-                  >
-                    <RiDeleteBin6Line />
-                  </button>
                 </div>
               </div>
             </div>

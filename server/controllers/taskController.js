@@ -48,6 +48,7 @@ const deleteTask = async (req, res) => {
 const editTask = async (req, res) => {
   try {
     const { data, id } = req.body;
+    
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       {
@@ -61,7 +62,7 @@ const editTask = async (req, res) => {
     if (!updatedTask) {
       return res.status(404).send({ message: "Not found" });
     } else {
-      const updatedTaskArray = await Task.find()
+      const updatedTaskArray = await Task.find({ email: data.email });
       return res.status(200).json(updatedTaskArray);
     }
   } catch (error) {
@@ -69,6 +70,5 @@ const editTask = async (req, res) => {
     res.status(500).send({ message: "Server Error" });
   }
 };
-
 
 module.exports = { addTask, allTasks, deleteTask, editTask };

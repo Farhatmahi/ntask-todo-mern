@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import DeleteConfirmation from "./DeleteConfirmation";
 import { useState } from "react";
 import TaskModal from "./TaskModal";
+import { toast } from "react-hot-toast";
 
 const TaskCard = ({ datae, setTasks, control, setModalData }) => {
   const { _id, email, task_name, description, due_date, priority } = datae;
@@ -13,13 +14,14 @@ const TaskCard = ({ datae, setTasks, control, setModalData }) => {
 
   const handleDelete = async (id) => {
     const res = await fetch(
-      `https://todo-server-chi.vercel.app/tasks/${id}?email=${email}`,
+      `https://todo-server-farhatmahi.vercel.app/tasks/${id}?email=${email}`,
       {
         method: "DELETE",
       }
     );
     const data = await res.json();
     setTasks(data);
+    toast.success("Task deleted successfully");
     return data;
   };
 
@@ -27,6 +29,7 @@ const TaskCard = ({ datae, setTasks, control, setModalData }) => {
     <>
       <label
         htmlFor="my-modal-5"
+        className=""
         onClick={() => {
           control();
           setModalData(datae);
@@ -78,7 +81,6 @@ const TaskCard = ({ datae, setTasks, control, setModalData }) => {
           {datae && isOpen && (
             <Modal datae={datae} setIsOpen={setIsOpen} setTasks={setTasks} />
           )}
-          {/* <DeleteConfirmation datae={datae} /> */}
         </div>
       </label>
       <TaskModal datae={datae} />
