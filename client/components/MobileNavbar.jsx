@@ -66,7 +66,7 @@ const MobileNavbar = () => {
             ) : (
               <Link
                 href="/login"
-                className="btn bg-accent text-white mr-8 px-8"
+                className="btn bg-accent text-white px-8"
               >
                 Sign up
               </Link>

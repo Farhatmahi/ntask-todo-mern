@@ -57,7 +57,7 @@ const login = () => {
         </div>
         {/* form  */}
       </div>
-      <form class="shadow-md rounded px-8 pt-10 pb-8 mb-4">
+      <form class="rounded px-8 pt-10 pb-8 mb-4 min-h-[70vh] lg:min-h-0">
         <div class="mb-4">
           <label class="block text-white " for="username">
             Email
@@ -88,7 +88,7 @@ const login = () => {
         <div class="flex items-center justify-start gap-6">
           <button
             onClick={handleLogIn}
-            className="btn bg-accent text-white w-36"
+            className="btn bg-accent text-white"
             type="button"
           >
             {loading ? (
@@ -116,7 +116,7 @@ const login = () => {
             <FcGoogle className="mr-2" /> Continue with Google
           </button>
         </div>
-        <p className="mt-8 text-white ">
+        <p className="mt-8 text-white">
           New to nTask?{" "}
           <Link className="text-accent hover:underline" href="/register">
             Register

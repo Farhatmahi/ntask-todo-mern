@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/context/authContext";
 import { useRouter } from "next/router";
+import { Oval } from "react-loader-spinner";
 
 const register = () => {
   const { createUser, updateUser, signInWithGoogle, loading, setLoading } =
@@ -65,7 +66,7 @@ const register = () => {
         </div>
         {/* form  */}
       </div>
-      <form class="shadow-md rounded px-8 pt-10 pb-8 mb-4">
+      <form class="rounded px-8 pt-10 pb-8 mb-4 min-h-[70vh] lg:min-h-0">
         <div class="mb-4">
           <label class="block text-white " for="username">
             Username
